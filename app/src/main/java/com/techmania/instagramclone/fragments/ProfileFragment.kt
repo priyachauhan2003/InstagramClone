@@ -47,6 +47,7 @@ class ProfileFragment : Fragment() {
             val intent= Intent(activity,SignupActivity::class.java)
             intent.putExtra("MODE",1)
             activity?.startActivity(intent)
+            activity?.finish()
         }
 
         return binding.root

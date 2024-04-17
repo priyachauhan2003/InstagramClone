@@ -63,7 +63,11 @@ class SignupActivity : AppCompatActivity() {
             if(intent.hasExtra("Mode")){
                 if(intent.getIntExtra("Mode",-1)==1){
                     Firebase.firestore.collection(USER_NODE)
-                        .document(Firebase.auth.currentUser!!.uid).set(user)
+                        .document(Firebase.auth.currentUser!!.uid).set(user).
+                        addOnSuccessListener {
+                        startActivity(Intent(this@SignupActivity,HomeActivity::class.java))
+                        finish()
+                    }
                 }
             }
             else {
