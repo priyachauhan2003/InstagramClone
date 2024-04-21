@@ -46,8 +46,8 @@ class SignupActivity : AppCompatActivity() {
         binding.login.setText(Html.fromHtml(text))
 
         user=user()
-        if(intent.hasExtra("Mode")){
-            if(intent.getIntExtra("Mode",-1)==1){
+        if(intent.hasExtra("MODE")){
+            if(intent.getIntExtra("MODE",-1)==1){
                 binding.signUpButton.text="Update Profile"
 
                 Firebase.firestore.collection(USER_NODE).document(Firebase.auth.currentUser!!.uid).get()
@@ -56,12 +56,15 @@ class SignupActivity : AppCompatActivity() {
                         if(!user.image.isNullOrEmpty()){
                             Picasso.get().load(user.image).into(binding.profileImage)
                         }
+                        binding.name.editText?.setText(user.name)
+                        binding.email.editText?.setText(user.email)
+                        binding.password.editText?.setText(user.password)
                     }
             }
         }
         binding.signUpButton.setOnClickListener {
-            if(intent.hasExtra("Mode")){
-                if(intent.getIntExtra("Mode",-1)==1){
+            if(intent.hasExtra("MODE")){
+                if(intent.getIntExtra("MODE",-1)==1){
                     Firebase.firestore.collection(USER_NODE)
                         .document(Firebase.auth.currentUser!!.uid).set(user).
                         addOnSuccessListener {
