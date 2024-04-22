@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso
 import com.techmania.instagramclone.Models.user
 import com.techmania.instagramclone.R
 import com.techmania.instagramclone.SignupActivity
+import com.techmania.instagramclone.adapter.ViewPagerAdapter
 import com.techmania.instagramclone.databinding.FragmentProfileBinding
 import com.techmania.instagramclone.utils.USER_NODE
 
@@ -30,6 +31,7 @@ private const val ARG_PARAM2 = "param2"
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,11 @@ class ProfileFragment : Fragment() {
             activity?.startActivity(intent)
             activity?.finish()
         }
+        viewPagerAdapter=ViewPagerAdapter(requireActivity().supportFragmentManager)
+        viewPagerAdapter.addFragment(MyPostsFragment(),"MY POSTS")
+        viewPagerAdapter.addFragment(MyReelsFragment(),"MY REELS")
+        binding.viewPager.adapter=viewPagerAdapter
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
 
         return binding.root
     }
