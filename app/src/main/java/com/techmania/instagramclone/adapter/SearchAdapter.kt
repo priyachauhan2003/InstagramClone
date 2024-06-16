@@ -14,12 +14,13 @@ import com.techmania.instagramclone.databinding.SearchRvBinding
 import com.techmania.instagramclone.utils.FOLLOW
 import com.techmania.instagramclone.utils.USER_NODE
 
-class SearchAdapter(var context: Context,var userList:ArrayList<user>):RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
-    inner class ViewHolder(var binding: SearchRvBinding):RecyclerView.ViewHolder(binding.root)
+class SearchAdapter(var context: Context, var userList: ArrayList<user>) :
+    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    inner class ViewHolder(var binding: SearchRvBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding=SearchRvBinding.inflate(LayoutInflater.from(context),parent,false)
-        return  ViewHolder(binding)
+        var binding = SearchRvBinding.inflate(LayoutInflater.from(context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -27,32 +28,36 @@ class SearchAdapter(var context: Context,var userList:ArrayList<user>):RecyclerV
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var isfollow=false
-        Glide.with(context).load(userList.get(position).image).placeholder(R.drawable.user).into(holder.binding.profileImage)
-        holder.binding.name.text=userList.get(position).name
+        var isfollow = false
+        Glide.with(context).load(userList.get(position).image).placeholder(R.drawable.user)
+            .into(holder.binding.profileImage)
+        holder.binding.name.text = userList.get(position).name
 
-        Firebase.firestore.collection(Firebase.auth.currentUser!!.uid).whereEqualTo("email",userList.get(position))
+        Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+FOLLOW)
+            .whereEqualTo("email", userList.get(position).email)
             .get().addOnSuccessListener {
-                if(it.documents.size==0){
-                    isfollow=false
-                }else{
-                    holder.binding.follow.text="Unfollow"
-                    isfollow=true
+                if (it.documents.size == 0) {
+                    isfollow = false
+                } else {
+                    holder.binding.follow.text = "Unfollow"
+                    isfollow = true
                 }
             }
         holder.binding.follow.setOnClickListener {
-            if(isfollow){
-                Firebase.firestore.collection(Firebase.auth.currentUser!!.uid).whereEqualTo("email",userList.get(position))
+            if (isfollow) {
+                Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+FOLLOW)
+                    .whereEqualTo("email", userList.get(position).email)
                     .get().addOnSuccessListener {
-                        Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+ FOLLOW).document(it.documents.get(0).id).delete()
-                        holder.binding.follow.text="follow"
-                        isfollow=false
+                        Firebase.firestore.collection(Firebase.auth.currentUser!!.uid + FOLLOW)
+                            .document(it.documents.get(0).id).delete()
+                        holder.binding.follow.text = "follow"
                     }
-            }else{
-                Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+FOLLOW).document()
+                isfollow = false
+            } else {
+                Firebase.firestore.collection(Firebase.auth.currentUser!!.uid + FOLLOW).document()
                     .set(userList.get(position))
-                holder.binding.follow.text="Unfollow"
-                isfollow=true
+                holder.binding.follow.text = "Unfollow"
+                isfollow = true
             }
         }
     }
