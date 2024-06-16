@@ -49,14 +49,14 @@ class HomeFragment : Fragment() {
 
         followAdapter= FollowAdapter(requireContext(),followList)
         binding.followRv.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        binding.followRv.adapter=adapter
+        binding.followRv.adapter=followAdapter
 
         setHasOptionsMenu(true)
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.materialToolbar2)
 
         Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+ FOLLOW).get()
             .addOnSuccessListener {
-                var tempList=ArrayList<user>()!!
+                var tempList= arrayListOf<user>()!!
                 followList.clear()
                 for(i in it.documents){
                     var user: user=i.toObject<user>()!!

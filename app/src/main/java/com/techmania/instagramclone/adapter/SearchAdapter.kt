@@ -49,7 +49,7 @@ class SearchAdapter(var context: Context,var userList:ArrayList<user>):RecyclerV
                         isfollow=false
                     }
             }else{
-                Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+ FOLLOW).document()
+                Firebase.firestore.collection(Firebase.auth.currentUser!!.uid+FOLLOW).document()
                     .set(userList.get(position))
                 holder.binding.follow.text="Unfollow"
                 isfollow=true
