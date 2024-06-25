@@ -7,12 +7,9 @@ This project is a full-featured social media application inspired by Instagram, 
 ## Features
 
 ### User Authentication and Authorization
-
-* Users can conveniently report water-related issues via a mobile app, including urban flooding, water logging, sewage problems, and more.
-* Captured photos with geotagging provide visual evidence for accurate problem identification.
-
+* Users can easily log in or sign up through the mobile app.
 ### Media Sharing
-* The system incorporates CCTV feeds to gather additional data and imagery, enabling comprehensive data collection in various conditions.
+* The app allows users to upload and share media files stored on their mobile devices.
 ### Social Features
 * Follow/Unfollow: Users can follow or unfollow others, staying connected with their preferred content and creators.
 * Profile Management: Comprehensive profile management allows users to customize their profiles and view their followers, creating a personalized social media experience.
